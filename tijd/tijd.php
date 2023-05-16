@@ -4,7 +4,7 @@
     if($hour >= "18"){
         echo("Good evening! <br>");
         echo($time);
-        $class = 'goodmorning';
+        $class = 'morning';
     }elseif($hour >= "12"){
         echo("Good afternoon! <br>");
         echo($time);
@@ -29,7 +29,5 @@
     <title>Document</title>
 </head>
 <body class="<?php echo $class?>">
-    
-</body>
 </html>
 
