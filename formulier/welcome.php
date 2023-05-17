@@ -1,13 +1,47 @@
 <?php
 $name = $email = $gender = $comment = $website = "";
+$nameErr = $emailErr = $genderErr = $websiteErr = "";
+$showResult = False; 
+#doorgaan loop maken, met fout doorgaan = false
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $name = test_input($_POST["name"]);
-  $email = test_input($_POST["email"]);
-  $website = test_input($_POST["website"]);
-  $comment = test_input($_POST["comment"]);
-  $gender = test_input($_POST["gender"]);
+    $showResult = True;
+    if (empty($_POST["name"])) {
+      $nameErr = "Vul een naam in!";
+      $showResult = False;
+    } else {
+      $name = test_input($_POST["name"]);
+    }
+  
+    if (empty($_POST["email"])) {
+      $emailErr = "Vul een email in";
+      $showResult = False;
+    } else {
+      $email = test_input($_POST["email"]);
+    }
+  
+    if (empty($_POST["website"])) {
+      $website = "";
+    } else {
+      $website = test_input($_POST["website"]);
+    }
+  
+    if (empty($_POST["comment"])) {
+      $comment = "";
+    } else {
+      $comment = test_input($_POST["comment"]);
+    }
+  
+    if (empty($_POST["gender"])) {
+      $genderErr = "Vul een geslacht in!";
+      $showResult = False;
+    } else {
+      $gender = test_input($_POST["gender"]);
+    }
 }
+
+#je bouwt de melding op, append aan array en daarna nakijken
 
 function test_input($data) {
   $data = trim($data);
@@ -15,6 +49,7 @@ function test_input($data) {
   $data = htmlspecialchars($data);
   return $data;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,23 +61,26 @@ function test_input($data) {
     <link rel="stylesheet" href="css.css">
 </head>
 <body>
-    <form method="post" action="index.php">  
-        Name: <input type="text" name="name">
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">   
+        Name: <input type="text" name="name" value="<?php echo $name; ?>">
+        <span class="error">* <?php echo $nameErr;?></span>
         <br><br>
-        E-mail: <input type="text" name="email">
+        E-mail: <input type="email" name="email" value="<?php echo $email; ?>">
+        <span class="error">* <?php echo $emailErr;?></span>
         <br><br>
-        Website: <input type="text" name="website">
+        Website: <input type="text" name="website" value="<?php echo $website; ?>">
         <br><br>
         Comment: <textarea name="comment" rows="5" cols="40"></textarea>
         <br><br>
         Gender:
-        <input type="radio" name="gender" value="female">Female
-        <input type="radio" name="gender" value="male">Male
-        <input type="radio" name="gender" value="other">Other
+        <input type="radio" name="gender" value="female">Male
+        <input type="radio" name="gender" value="male">Female
+        <span class="error">* <?php echo $genderErr;?></span>
         <br><br>
         <input type="submit" name="submit" value="Submit">  
     </form>
     <?php
+    if($showResult == True){
         echo "<h2>Your Input:</h2>";
         echo $name;
         echo "<br>";
@@ -53,8 +91,7 @@ function test_input($data) {
         echo $comment;
         echo "<br>";
         echo $gender;
-    ?>
-
-    
+    }
+    ?>     
 </body>
 </html>

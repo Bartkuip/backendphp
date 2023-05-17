@@ -3,15 +3,21 @@
 <?php
 // var_dump($_POST);
 echo "<h2>Your Input:</h2>";
-echo ($_POST["name"]);
+if(!empty($_POST['name'])){
+    echo htmlspecialchars($_POST["name"]);
+} else {
+    echo $name;
+}
+
+
 echo "<br>";
-echo ($_POST["email"]);
+echo htmlspecialchars($_POST["email"]);
 echo "<br>";
-echo ($_POST["website"]);
+echo htmlspecialchars($_POST["website"]);
 echo "<br>";
-echo ($_POST["comment"]);
+echo htmlspecialchars($_POST["comment"]);
 echo "<br>";
-echo ($_POST["gender"]);
+echo htmlspecialchars($_POST["gender"]);
 ?>
 
 </body>
